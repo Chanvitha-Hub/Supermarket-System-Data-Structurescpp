@@ -1,5 +1,12 @@
 #include <iostream>
 #include <string>
+#include<windows.h>
+#include<conio.h>
+#include<fstream>
+#include<cstring>
+#include<cstdio>
+#include<cstdlib>
+#include<iomanip>
 
 struct Item {
     int id;
@@ -48,19 +55,19 @@ public:
         }
     }
 
-    void deleteItem(std::string name) {
+    void deleteItem(int id) {
         if (userType == "admin") {
             Item* temp = head;
             Item* prev = NULL;
 
-            if (temp != NULL && temp->name == name) {
+            if (temp != NULL && temp->id == id) {
                 head = temp->next;
                 delete temp;
                 std::cout << "Item deleted successfully." << std::endl;
                 return;
             }
 
-            while (temp != NULL && temp->name != name) {
+            while (temp != NULL && temp->id != id) {
                 prev = temp;
                 temp = temp->next;
             }
@@ -77,17 +84,19 @@ public:
         }
     }
 
-    void modifyItem(std::string name, int quantity) {
+    void modifyItem(int id, std::string name, int price, int quantity) {
         if (userType == "admin") {
             Item* temp = head;
 
-            while (temp != NULL && temp->name != name) {
+            while (temp != NULL && temp->id != id) {
                 temp = temp->next;
             }
 
             if (temp == NULL) {
                 std::cout << "Item not found." << std::endl;
             } else {
+                temp->name = name;
+                temp->price = price;
                 temp->quantity = quantity;
                 std::cout << "Item modified successfully." << std::endl;
             }
@@ -110,21 +119,65 @@ public:
 
 int main() {
     SuperMarket sm;
-    std::string type, name;
-    int id, quantity;
-    float price;
-    std::cout << "Enter user type (admin/cashier): ";
-    std::cin >> type;
-    sm.setUserType(type);
-    std::cout << "Enter Product ID: ";
-    std::cin >> id;
-    std::cout << "Enter Product Name: ";
-    std::cin >> name;
-    std::cout << "Enter Product Price: ";
-    std::cin >> price;
-    std::cout << "Enter Product Quantity: ";
-    std::cin >> quantity;
-    sm.addItem(id, name, price, quantity);
-    sm.displayItems();
+
+    std::string userType;
+    std::cout << "Enter user type (admin or cashier): ";
+    std::cin >> userType;
+    sm.setUserType(userType);
+
+    if (userType == "admin") {
+        while (true) {
+            std::cout << "Select an option:" << std::endl;
+            std::cout << "1. Add product" << std::endl;
+            std::cout << "2. Delete product" << std::endl;
+            std::cout << "3. Modify product" << std::endl;
+            std::cout << "4. Display products" << std::endl;
+            std::cout << "5. Exit" << std::endl;
+
+            int option;
+            std::string type, name;
+            int id, quantity;
+            float price;
+
+            std::cout << "Enter your choice: ";
+            std::cin >> option;
+
+            switch (option) {
+                case 1:
+                    // Call addItem function here
+                    std::cout << "Enter Product ID: ";
+                    std::cin >> id;
+                    std::cout << "Enter Product Name: ";
+                    std::cin >> name;
+                    std::cout << "Enter Product Price: ";
+                    std::cin >> price;
+                    std::cout << "Enter Product Quantity: ";
+                    std::cin >> quantity;
+                    sm.addItem(id, name, price, quantity);
+                    break;
+                case 2:
+                    // Call deleteItem function here
+                    std::cout << "Enter Product ID: ";
+                    std::cin >> id;
+                    sm.deleteItem(id);
+                    break;
+                case 3:
+                    // Call modifyItem function here
+                    sm.modifyItem(id, name, price, quantity);
+                    break;
+                case 4:
+                    // Call displayItems function here
+                    sm.displayItems();
+                    break;
+                case 5:
+                    return 0;
+                default:
+                    std::cout << "Invalid option. Try again." << std::endl;
+
+                    system("cls");
+            }
+            system("cls");
+        }
+    }
     return 0;
 }
