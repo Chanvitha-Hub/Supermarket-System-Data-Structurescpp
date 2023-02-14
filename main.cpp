@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include<windows.h>
-#include<conio.h>
+#include <windows.h>
+#include <conio.h>
 #include<fstream>
 #include<cstring>
 #include<cstdio>
@@ -120,26 +120,30 @@ public:
 int main() {
     SuperMarket sm;
 
+    std::cout << "\n==============Supermarket System===============" << std::endl;
+
     std::string userType;
-    std::cout << "Enter user type (admin or cashier): ";
+    std::cout << "\nEnter user type (admin or cashier): ";
     std::cin >> userType;
     sm.setUserType(userType);
+    std::cout << "\n";
 
     if (userType == "admin") {
         while (true) {
+//            std::system("CLEAR");
             std::cout << "Select an option:" << std::endl;
-            std::cout << "1. Add product" << std::endl;
-            std::cout << "2. Delete product" << std::endl;
-            std::cout << "3. Modify product" << std::endl;
-            std::cout << "4. Display products" << std::endl;
-            std::cout << "5. Exit" << std::endl;
+            std::cout << "\t1. Add product" << std::endl;
+            std::cout << "\t2. Delete product" << std::endl;
+            std::cout << "\t3. Modify product" << std::endl;
+            std::cout << "\t4. Display products" << std::endl;
+            std::cout << "\t5. Exit" << std::endl;
 
             int option;
             std::string type, name;
             int id, quantity;
             float price;
 
-            std::cout << "Enter your choice: ";
+            std::cout << "\nEnter your choice: ";
             std::cin >> option;
 
             switch (option) {
@@ -154,6 +158,8 @@ int main() {
                     std::cout << "Enter Product Quantity: ";
                     std::cin >> quantity;
                     sm.addItem(id, name, price, quantity);
+                    Sleep(2000);
+//                    system("cls");
                     break;
                 case 2:
                     // Call deleteItem function here
