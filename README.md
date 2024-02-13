@@ -51,3 +51,5 @@
 7. **Add Cashiers**: Add new cashier accounts with unique usernames and passwords.
 8. **Delete Cashiers**: Remove cashier accounts from the system.
 9. **Display Cashiers**: View all registered cashier accounts.
+
+![Screenshot](1.png)
